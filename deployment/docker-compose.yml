@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ../backend
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=sqlite:///./test.db
+      - SECRET_KEY=supersecretkey_change_me_in_prod
+    volumes:
+      - ../backend:/app
+      
+  frontend:
+    build: 
+      context: ../frontend
+      # Need a generic Dockerfile for Next.js if we wanted, 
+      # but for now we can just mount or use a basic node image for dev
+    image: node:18
+    working_dir: /app
+    ports:
+      - "3000:3000"
+    volumes:
+      - ../frontend:/app
+    command: npm run dev
