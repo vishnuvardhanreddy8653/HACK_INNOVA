@@ -17,3 +17,14 @@ def submit_vote(vote: schemas.VoteCreate, voter_id: str, db: Session = Depends(g
         return {"status": "success", "message": "Vote cast successfully", "vote_id": vote_record.id}
     except ValueError as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+
+@router.post("/reset")
+def reset_all_votes(db: Session = Depends(get_db)):
+    # Admin route to reset all voting states to False for Phase 2 simulation
+    try:
+        db.query(models.Voter).update({models.Voter.has_voted: False})
+        db.query(models.Vote).delete() # clear ballots
+        db.commit()
+    except Exception as e:
+        print(f"Reset Error: {e}")
+    return {"status": "success"}

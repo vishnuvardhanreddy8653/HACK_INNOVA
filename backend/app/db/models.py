@@ -12,6 +12,8 @@ class Voter(Base):
     face_embedding = Column(String, nullable=True)
     iris_embedding = Column(String, nullable=True)
     fingerprint_hash = Column(String, nullable=True)
+    aadhaar_id = Column(String, unique=True, index=True, nullable=True)
+    mobile_number = Column(String, nullable=True)
     has_voted = Column(Boolean, default=False)
     created_at = Column(DateTime, default=datetime.utcnow)
 

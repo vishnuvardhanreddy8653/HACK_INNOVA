@@ -23,6 +23,10 @@ class VoteBase(BaseModel):
 class VoteCreate(VoteBase):
     pass
 
+class LinkQRRequest(BaseModel):
+    voter_id: str
+    scanned_qr: str
+
 class QRVerifyRequest(BaseModel):
     qr_code: str
 
@@ -34,6 +38,13 @@ class AlertCreate(BaseModel):
     voter_id: Optional[int] = None
     image: Optional[str] = None
     reason: str
+
+class OTPSendRequest(BaseModel):
+    aadhaar_id: str
+
+class OTPVerifyRequest(BaseModel):
+    aadhaar_id: str
+    otp: str
 
 class Token(BaseModel):
     access_token: str
